@@ -2,31 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Coin : MonoBehaviour
 {
-    //Скорость движения врага
-    public float speed;
+    void OnTriggerEnter(Collider other) {
 
-    //Цель, к которой движется враг
-    public Transform target;
+        CoinsCounter coins = other.GetComponent<CoinsCounter>();
 
-    //Очки урона от атаки врагом игрока
-    public int playerDamage = 2;
+        //РљРѕР»РёС‡РµСЃС‚РІРѕ РјРѕРЅРµС‚РѕРє РѕР±РЅРѕРІР»СЏРµС‚СЃСЏ
+        coins.CollectCoins();
 
-
-    void Update()
-    {
-        //Меняет каждый кадр позицию NPC на новую
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-
-        //Разворачивает каждый кадр NPC лицом к цели
-        transform.LookAt(target.position);
-    }
-
-    //При столкновении врага с игроком второму наносится урон
-    private void OnTriggerEnter(Collider other)
-    {
-        Player player = other.GetComponent<Player>();
-        player.TakeDamage(playerDamage);
+        //РњРѕРЅРµС‚РєР°, РєРѕС‚РѕСЂСѓСЋ СЃРѕР±СЂР°Р»Рё, СѓРЅРёС‡С‚РѕР¶Р°РµС‚СЃСЏ
+        Destroy(gameObject);
     }
 }
